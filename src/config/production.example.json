@@ -1,0 +1,8 @@
+{
+  "port": 3000,
+  "db": {
+    "username": "prod-name",
+    "password": "prod-password",
+    "name": "prod-name"
+  }
+}
