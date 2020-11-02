@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import { DB_NAME, DB_PASSWORD, DB_USERNAME, PORT } from './config'
 import routes from './routes';
@@ -7,6 +8,7 @@ import routes from './routes';
 const server: express.Application = express();
 
 server.use(express.json());
+server.use(cors());
 
 server.use(routes);
 

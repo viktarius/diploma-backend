@@ -1,9 +1,9 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from "mongoose";
 
 import { Interview } from "../models";
 
 const InterviewSchema: Schema = new Schema({
-    name: {type: String, required: true}
-});
+    label: {type: String, required: true}
+}, {versionKey: false});
 
 export default model<Interview>('Interview', InterviewSchema)
