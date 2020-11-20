@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import { DB_NAME, DB_PASSWORD, DB_USERNAME, PORT } from './config'
 import routes from './routes';
+import { errorHandlerMiddleware } from "./core/middlewares";
 
 const server: express.Application = express();
 
@@ -11,6 +12,8 @@ server.use(express.json());
 server.use(cors());
 
 server.use(routes);
+
+server.use(errorHandlerMiddleware);
 
 server.listen(PORT, () => {
     console.log(`Server is running in http://localhost:${PORT}`);

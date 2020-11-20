@@ -1,1 +1,2 @@
-export { Interview } from "./interview.model";
+export * from "./interview.model";
+export * from './dictionary.model';

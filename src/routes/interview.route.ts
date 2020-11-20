@@ -1,18 +1,24 @@
 import express from 'express';
+import { BadRequest } from 'http-errors';
+
 import { InterviewService } from "../core/services";
 import { getById } from "../core/services/interview.service";
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     const result = await InterviewService.getAll();
     res.send(result);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     const {body} = req;
-    const result = await InterviewService.add(body);
-    res.status(201).send(result);
+    try {
+        const result = await InterviewService.add(body);
+        res.status(201).send(result);
+    } catch (e) {
+        next(new BadRequest(e.message));
+    }
 });
 
 router.get('/:id', async (req, res) => {
