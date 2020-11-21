@@ -1,15 +1,19 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import passport from "passport";
 import cors from 'cors';
 
 import { DB_NAME, DB_PASSWORD, DB_USERNAME, PORT } from './config'
 import routes from './routes';
 import { errorHandlerMiddleware } from "./core/middlewares";
+import { applyPassportStrategy } from "./config/passport.config";
 
 const server: express.Application = express();
 
 server.use(express.json());
 server.use(cors());
+
+applyPassportStrategy(passport);
 
 server.use(routes);
 
