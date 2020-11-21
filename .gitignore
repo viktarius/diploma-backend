@@ -3,6 +3,8 @@
 /tmp
 /out-tsc
 .env
+**/production.json
+**/development.json
 
 # dependencies
 /node_modules
