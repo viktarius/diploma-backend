@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
 
-import InterviewCollection from "../schemas/interview";
+import InterviewCollection from "../schemas/interview.schema";
 import { Interview } from "../models";
 
-export const add = (body: Interview) => {
+export const create = (body: Interview) => {
     const interview = {
         ...body,
         questions: body.questions.map(q => ({...q, id: uuid()})),

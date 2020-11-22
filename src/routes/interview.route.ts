@@ -7,9 +7,9 @@ import passport from "passport";
 
 const router = express.Router();
 
-router.use( passport.authenticate('jwt', { session: false }));
+router.use(passport.authenticate('jwt', { session: false }));
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     const result = await InterviewService.getAll();
     res.send(result);
 });
@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {
-        const result = await InterviewService.add(body);
+        const result = await InterviewService.create(body);
         res.status(201).send(result);
     } catch (e) {
         next(new BadRequest(e.message));
