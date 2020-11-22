@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {
-        const result = await InterviewService.create(body);
+        const result = await InterviewService.create(body, req.user['_id']);
         res.status(201).send(result);
     } catch (e) {
         next(new BadRequest(e.message));
