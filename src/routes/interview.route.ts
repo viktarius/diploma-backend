@@ -3,10 +3,13 @@ import { BadRequest } from 'http-errors';
 
 import { InterviewService } from "../core/services";
 import { getById } from "../core/services/interview.service";
+import passport from "passport";
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+router.use(passport.authenticate('jwt', { session: false }));
+
+router.get('/', async (req, res) => {
     const result = await InterviewService.getAll();
     res.send(result);
 });
@@ -14,7 +17,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {
-        const result = await InterviewService.add(body);
+        const result = await InterviewService.create(body, req.user['_id']);
         res.status(201).send(result);
     } catch (e) {
         next(new BadRequest(e.message));
