@@ -1,9 +1,8 @@
 import express from 'express';
+import passport from "passport";
 import { BadRequest } from 'http-errors';
 
 import { InterviewService } from "../core/services";
-import { getById } from "../core/services/interview.service";
-import passport from "passport";
 
 const router = express.Router();
 
@@ -26,7 +25,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const result = await getById(id);
+    const result = await InterviewService.getById(id);
     res.send(result);
 });
 

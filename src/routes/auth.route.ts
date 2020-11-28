@@ -20,7 +20,7 @@ router.post('/login', async (req, res, next) => {
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if (user && user.email) {
-        const isPasswordMatched = sha256(user.password) === password;
+        const isPasswordMatched = user.password === sha256(password);
         if (isPasswordMatched) {
             // Sign token
             const token = jwt.sign({email}, PASSPORT_SECRET_KEY, {
