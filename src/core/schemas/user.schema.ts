@@ -1,8 +1,9 @@
 import { model, Schema } from "mongoose";
 
-import {User} from '../models';
+import { User } from '../models';
 
 const UserSchema: Schema = new Schema({
+    _id: Schema.Types.ObjectId,
     email: {type: String, required: true},
     password: {type: String, required: true},
     first_name: {type: String, required: true},
@@ -12,7 +13,7 @@ const UserSchema: Schema = new Schema({
 }, {
     versionKey: false,
     toJSON: {
-        transform: function(doc, ret){
+        transform: function (doc, ret) {
             delete ret.password
         }
     }

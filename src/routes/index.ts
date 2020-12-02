@@ -6,7 +6,7 @@ import answerRouter from './answer.route';
 const router = express.Router();
 
 router.use('/auth', authRouter);
-router.use('/interview', interviewRouter);
-router.use('/answer', answerRouter);
+router.use('/interviews', interviewRouter);
+router.use('/answers', answerRouter);
 
 export default router;

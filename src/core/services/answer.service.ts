@@ -1,8 +1,12 @@
 import { Answer } from "../models";
 import { AnswerCollection } from "../schemas";
 
-export const findByUserId = (user_id: string) => {
-    return AnswerCollection.findOne({user_id: user_id});
+export const getAll = () => {
+    return AnswerCollection.find({});
+};
+
+export const findByUserId = (interview_id: string, user_id: string) => {
+    return AnswerCollection.findOne({user_id, interview_id});
 };
 
 export const create = (body: Answer, user_id: string) => {

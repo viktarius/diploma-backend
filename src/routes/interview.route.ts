@@ -8,6 +8,11 @@ const router = express.Router();
 
 router.use(passport.authenticate('jwt', { session: false }));
 
+router.get('/preview', async (req, res) => {
+    const result = await InterviewService.getInterviewPreview(req.user['_id']);
+    res.send(result)
+});
+
 router.get('/', async (req, res) => {
     const result = await InterviewService.getAll();
     res.send(result);
