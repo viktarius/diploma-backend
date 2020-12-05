@@ -7,8 +7,8 @@ const AnsSchema: Schema = new Schema<any>({
 }, {versionKey: false});
 
 const AnswerSchema: Schema = new Schema({
-    user_id: {type: String, required: true},
-    interview_id: {type: String, required: true},
+    user_id: {type: Schema.Types.ObjectId, ref: 'Users'},
+    interview_id: {type: Schema.Types.ObjectId, ref: 'Interviews'},
     answers: [AnsSchema]
 }, {versionKey: false});
 
