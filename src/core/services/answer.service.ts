@@ -22,11 +22,16 @@ export const getAnswerStatistic = (interview_id: string) => {
                 count: {$sum: 1}
             }
         },
+        {
+            $group: {
+                _id: "$question_id",
+                answers: {$push: {name: "$_id", value: "$count"}}
+            }
+        },
         { $project: {
                 _id: 0,
-                answer: "$_id",
-                question_id: 1,
-                count: 1
+                question_id: "$_id",
+                answers: 1
             }
         }
     ])
