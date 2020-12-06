@@ -17,31 +17,19 @@ export const getAnswerStatistic = (interview_id: string) => {
         {$unwind: "$answers"},
         {
             $group: {
-                _id: "$interview_id",
-                answers: {
-                    $push: {answer: "$answers.answer", question_id: "$answers.question_id"}
-                }
+                _id: "$answers.answer",
+                question_id: {$first: "$answers.question_id"},
+                count: {$sum: 1}
             }
-        }])
-};
-
-const mockAnswer = {
-    label: 'string',
-    questions: [
-        {
-            id: 'answer_id',
-            question: 'question',
-            answers: [
-                {
-                    option: 'option1',
-                    count: 2
-                }, {
-                    option: 'option2',
-                    count: 3
-                }
-            ]
+        },
+        { $project: {
+                _id: 0,
+                answer: "$_id",
+                question_id: 1,
+                count: 1
+            }
         }
-    ]
+    ])
 };
 
 export const create = (body: Answer, user_id: string) => {
