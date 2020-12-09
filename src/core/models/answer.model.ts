@@ -5,6 +5,6 @@ export interface Answer extends Document{
     interview_id: string;
     answers: Array<{
         question_id: string;
-        answer: string;
+        answer: string | Array<string>;
     }>
 }

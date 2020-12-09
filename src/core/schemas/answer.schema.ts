@@ -3,7 +3,7 @@ import { Answer } from "../models";
 
 const AnsSchema: Schema = new Schema<any>({
     question_id: {type: String, required: true},
-    answer: {type: String, required: true},
+    answer: {type: Schema.Types.Mixed, required: true},
 }, {versionKey: false});
 
 const AnswerSchema: Schema = new Schema({

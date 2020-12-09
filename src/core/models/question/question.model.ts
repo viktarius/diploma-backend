@@ -1,3 +1,4 @@
-import { CheckOne } from "./check-one.model";
+import { CheckQuestion } from "./check-question.model";
+import { TextQuestion } from "./text-question.model";
 
-export type Question = CheckOne;
+export type Question = CheckQuestion | TextQuestion;
