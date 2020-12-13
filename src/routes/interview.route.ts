@@ -1,13 +1,17 @@
 import express from 'express';
+import passport from "passport";
 import { BadRequest } from 'http-errors';
 
 import { InterviewService } from "../core/services";
-import { getById } from "../core/services/interview.service";
-import passport from "passport";
 
 const router = express.Router();
 
 router.use(passport.authenticate('jwt', { session: false }));
+
+router.get('/preview', async (req, res) => {
+    const result = await InterviewService.getInterviewPreview(req.user['_id']);
+    res.send(result)
+});
 
 router.get('/', async (req, res) => {
     const result = await InterviewService.getAll();
@@ -26,7 +30,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const result = await getById(id);
+    const result = await InterviewService.getById(id);
     res.send(result);
 });
 

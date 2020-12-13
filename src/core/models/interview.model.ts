@@ -6,4 +6,6 @@ export interface Interview extends Document {
     questions: Array<Question>
     updated_at: Date;
     create_at: Date;
+    admin: string;
+    managers: Array<string>;
 }
