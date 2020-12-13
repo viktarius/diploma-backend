@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
         }
         next(new BadRequest("You have already voted"));
     } catch (e) {
-        next(new BadRequest(e.message));
+        next(new InternalServerError(e.message));
     }
 });
 
