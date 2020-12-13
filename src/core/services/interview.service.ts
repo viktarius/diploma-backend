@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { InterviewCollection } from "../schemas";
 import { Interview } from "../models";
 
-export const getInterviewPreview = (user_id: string) => {
+export const getInterviewPreview = () => {
     return InterviewCollection.find({}).select('_id label admin')
         .populate({ path: 'admin', select: 'first_name surname' })
 };

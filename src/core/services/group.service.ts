@@ -12,3 +12,8 @@ export const create = (body: Group, user_id: string) => {
 export const getAll = () => {
     return GroupsCollection.find({})
 };
+
+export const getGroupPreview = () => {
+    return GroupsCollection.find({}).select('_id label admin')
+        .populate({ path: 'admin', select: 'first_name surname' })
+};

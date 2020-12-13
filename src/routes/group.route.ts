@@ -13,6 +13,11 @@ router.get('/', async (req, res) => {
     res.status(200).send(result);
 });
 
+router.get('/preview', async (req, res) => {
+    const result = await GroupService.getGroupPreview();
+    res.send(result)
+});
+
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {

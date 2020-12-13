@@ -9,6 +9,6 @@ const router = express.Router();
 router.use('/auth', authRouter);
 router.use('/interviews', interviewRouter);
 router.use('/answers', answerRouter);
-router.use('./groups', groupRouter);
+router.use('/groups', groupRouter);
 
 export default router;
