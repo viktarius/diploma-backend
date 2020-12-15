@@ -10,10 +10,14 @@ export const create = (body: Group, user_id: string) => {
 };
 
 export const getAll = () => {
-    return GroupsCollection.find({})
+    return GroupsCollection.find({});
+};
+
+export const getById = (id: string) => {
+    return GroupsCollection.findById(id);
 };
 
 export const getGroupPreview = () => {
-    return GroupsCollection.find({}).select('_id label admin')
-        .populate({ path: 'admin', select: 'first_name surname' })
+    return GroupsCollection.find({}).select('label admin')
+        .populate({path: 'admin', select: 'first_name surname'});
 };

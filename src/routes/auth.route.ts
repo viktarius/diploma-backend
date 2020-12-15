@@ -3,22 +3,15 @@ import passport from "passport";
 import jwt from 'jsonwebtoken';
 import { Forbidden, InternalServerError, Unauthorized } from 'http-errors';
 
-import User from '../core/schemas/user.schema';
 import { PASSPORT_EXPIRES_IN, PASSPORT_SECRET_KEY } from "../config";
 import { UserService } from "../core/services";
 import sha256 from "sha256";
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    User.find({}, (err, result) => {
-        res.status(200).json({data: result});
-    });
-});
-
 router.post('/login', async (req, res, next) => {
     const {email, password} = req.body;
-    const user = await User.findOne({email});
+    const user = await UserService.findByEmail(email);
     if (user && user.email) {
         const isPasswordMatched = user.password === sha256(password);
         if (isPasswordMatched) {
@@ -41,13 +34,13 @@ router.post('/login', async (req, res, next) => {
 router.post('/register', async (req, res, next) => {
     try {
         const {email} = req.body;
-        const user = await User.findOne({email});
+        const user = await UserService.findByEmail(email);
 
         if (!user) {
             await UserService.create(req.body);
 
             // Sign token
-            const newUser = await User.findOne({email});
+            const newUser = await UserService.findByEmail(email);
             const token = jwt.sign({email}, PASSPORT_SECRET_KEY, {
                 expiresIn: PASSPORT_EXPIRES_IN,
             });
@@ -64,7 +57,7 @@ router.post('/register', async (req, res, next) => {
 router.get('/refreshToken', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
     try {
         const email = req.user['email'];
-        const user = await User.findOne({email});
+        const user = await UserService.findByEmail(email);
 
         const token = jwt.sign({email}, PASSPORT_SECRET_KEY, {
             expiresIn: PASSPORT_EXPIRES_IN,

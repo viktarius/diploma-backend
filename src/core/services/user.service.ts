@@ -11,3 +11,7 @@ export const create = (user: User) => {
     };
     return UserCollection.create(newUser)
 };
+
+export const findByEmail = (email: string) => {
+    return UserCollection.findOne({email})
+};
