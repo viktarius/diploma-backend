@@ -1,8 +1,8 @@
 import express from "express";
 import passport from "passport";
-import { InternalServerError } from 'http-errors';
+import { BadRequest, InternalServerError } from 'http-errors';
 
-import { GroupService } from "../core/services";
+import { GroupService, UserService } from "../core/services";
 
 const router = express.Router();
 
@@ -28,9 +28,35 @@ router.get('/:id', async (req, res) => {
     res.status(200).send(result);
 });
 
-router.post('/:id/invite', async (req, res) => {
-    const invited = req.body.invited;
-    res.send({invited});
+router.post('/:id/invite', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const email = req.body.email;
+        const user = await UserService.findByEmail(email);
+        if (user) {
+            try {
+                await GroupService.inviteUser(id, user._id);
+                res.status(200).send({_id: user._id, email: user.email, displayed_name: user.displayed_name});
+            } catch (e) {
+                next(new InternalServerError(e.message));
+            }
+        } else {
+            next(new BadRequest(`User with email: ${email} not found`));
+        }
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.post('/:id/removeUserFrom', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const {userId, removeFrom} = req.body;
+        await GroupService.removeFrom(id, userId, removeFrom.toLowerCase());
+        res.status(200).send({message: `user ${userId} was removed from ${removeFrom}`})
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
 });
 
 router.post('/', async (req, res, next) => {
