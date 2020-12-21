@@ -15,7 +15,8 @@ router.get('/', async (req, res) => {
 
 router.get('/preview', async (req, res, next) => {
     try {
-        const result = await GroupService.getGroupPreview();
+        const userId = req.user['_id'];
+        const result = await GroupService.getGroupPreview(userId);
         res.status(200).send(result);
     } catch (e) {
         next(new InternalServerError(e.message));
@@ -35,7 +36,7 @@ router.post('/:id/invite', async (req, res, next) => {
         const user = await UserService.findByEmail(email);
         if (user) {
             try {
-                await GroupService.inviteUser(id, user._id);
+                await GroupService.addUserTo(id, user._id, 'invited');
                 res.status(200).send({_id: user._id, email: user.email, displayed_name: user.displayed_name});
             } catch (e) {
                 next(new InternalServerError(e.message));
@@ -52,8 +53,20 @@ router.post('/:id/removeUserFrom', async (req, res, next) => {
     const id = <string>req.params.id;
     try {
         const {userId, removeFrom} = req.body;
-        await GroupService.removeFrom(id, userId, removeFrom.toLowerCase());
+        await GroupService.removeUserFrom(id, userId, removeFrom.toLowerCase());
         res.status(200).send({message: `user ${userId} was removed from ${removeFrom}`})
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.post('/:id/addUserTo', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const userId = req.user['_id'];
+        const {addTo} = req.body;
+        await GroupService.addUserTo(id, userId, addTo.toLowerCase());
+        res.status(200).send({message: `user ${userId} was added to ${addTo}`});
     } catch (e) {
         next(new InternalServerError(e.message));
     }
