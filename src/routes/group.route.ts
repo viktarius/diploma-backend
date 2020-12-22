@@ -72,6 +72,17 @@ router.post('/:id/addUserTo', async (req, res, next) => {
     }
 });
 
+router.post('/:id/acceptUser', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const {userId} = req.body;
+        await GroupService.acceptUser(id, userId);
+        res.status(200).send({message: `user ${userId} was added to Participants`});
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {

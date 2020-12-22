@@ -55,3 +55,10 @@ export const addUserTo = (groupId: string, userId: string, addTo: string) => {
 export const removeUserFrom = (groupId: string, userId: string, removeFrom: string) => {
     return GroupsCollection.findByIdAndUpdate(groupId, {$pull: {[removeFrom]: userId}});
 };
+
+export const acceptUser = (groupId: string, userId: string) => {
+  return GroupsCollection.findByIdAndUpdate(groupId, {
+      $pull: {"requested": userId},
+      $push: {"participants": userId}
+  })
+};
