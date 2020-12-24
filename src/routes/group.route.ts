@@ -54,7 +54,7 @@ router.post('/:id/removeUserFrom', async (req, res, next) => {
     try {
         const {userId, removeFrom} = req.body;
         await GroupService.removeUserFrom(id, userId, removeFrom.toLowerCase());
-        res.status(200).send({message: `user ${userId} was removed from ${removeFrom}`})
+        res.status(200).send({message: `user ${userId} was remove from ${removeFrom}`})
     } catch (e) {
         next(new InternalServerError(e.message));
     }
@@ -66,7 +66,7 @@ router.post('/:id/addUserTo', async (req, res, next) => {
         const userId = req.user['_id'];
         const {addTo} = req.body;
         await GroupService.addUserTo(id, userId, addTo.toLowerCase());
-        res.status(200).send({message: `user ${userId} was added to ${addTo}`});
+        res.status(200).send({message: `user ${userId} was add to ${addTo}`});
     } catch (e) {
         next(new InternalServerError(e.message));
     }
@@ -77,7 +77,29 @@ router.post('/:id/acceptUser', async (req, res, next) => {
     try {
         const {userId} = req.body;
         await GroupService.acceptUser(id, userId);
-        res.status(200).send({message: `user ${userId} was added to Participants`});
+        res.status(200).send({message: `user ${userId} was add to Participants`});
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.get('/:id/acceptInvite', async (req, res, next) => {
+    try {
+        const id = <string>req.params.id;
+        const userId = req.user['_id'];
+        await GroupService.acceptInvite(id, userId);
+        res.status(200).send({message: `user ${userId} was add to Participants`})
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.get('/:id/leaveGroup', async (req, res, next) => {
+    try {
+        const id = <string>req.params.id;
+        const userId = req.user['_id'];
+        await GroupService.leaveGroup(id, userId);
+        res.status(200).send({message: `user ${userId} was remove from Participants`})
     } catch (e) {
         next(new InternalServerError(e.message));
     }

@@ -57,8 +57,23 @@ export const removeUserFrom = (groupId: string, userId: string, removeFrom: stri
 };
 
 export const acceptUser = (groupId: string, userId: string) => {
-  return GroupsCollection.findByIdAndUpdate(groupId, {
-      $pull: {"requested": userId},
-      $push: {"participants": userId}
-  })
+    return GroupsCollection.findByIdAndUpdate(groupId, {
+        $pull: {"requested": userId},
+        $push: {"participants": userId}
+    })
 };
+
+export const acceptInvite = (groupId: string, userId: string) => {
+    return GroupsCollection.findByIdAndUpdate(groupId, {
+        $pull: {"invited": userId},
+        $push: {"participants": userId}
+    })
+};
+
+export const leaveGroup = (groupId: string, userId: string) => {
+    return GroupsCollection.findByIdAndUpdate(groupId, {
+        $pull: {"participants": userId}
+    })
+};
+
+
