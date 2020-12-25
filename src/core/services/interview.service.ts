@@ -5,16 +5,17 @@ import { Interview } from "../models";
 
 export const getInterviewPreview = () => {
     return InterviewCollection.find({}).select('_id label admin')
-        .populate({ path: 'admin', select: 'first_name surname' })
+        .populate({ path: 'admin', select: 'displayed_name' })
 };
 
 export const create = (body: Interview, user_id: string) => {
+    const date = new Date();
     const interview = {
         ...body,
         admin: user_id,
         questions: body.questions.map(q => ({...q, id: uuid()})),
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: date,
+        updated_at: date,
         managers: []
     };
     return InterviewCollection.create(interview)

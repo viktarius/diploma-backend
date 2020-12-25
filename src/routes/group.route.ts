@@ -23,6 +23,16 @@ router.get('/preview', async (req, res, next) => {
     }
 });
 
+router.get('/getAvailableGroupsForUser', async (req, res, next) => {
+    try {
+        const userId = req.user['_id'];
+        const result = await GroupService.getAvailableGroupsForUser(userId);
+        res.status(200).send(result);
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const result = await GroupService.getById(id);
