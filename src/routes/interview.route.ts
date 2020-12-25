@@ -1,16 +1,21 @@
 import express from 'express';
 import passport from "passport";
-import { BadRequest } from 'http-errors';
+import { BadRequest, InternalServerError } from 'http-errors';
 
 import { InterviewService } from "../core/services";
 
 const router = express.Router();
 
-router.use(passport.authenticate('jwt', { session: false }));
+router.use(passport.authenticate('jwt', {session: false}));
 
-router.get('/preview', async (req, res) => {
-    const result = await InterviewService.getInterviewPreview();
-    res.send(result)
+router.get('/preview', async (req, res, next) => {
+    try {
+        const userId = req.user['_id'];
+        const result = await InterviewService.getInterviewPreview(userId);
+        res.status(200).send(result);
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
 });
 
 router.get('/', async (req, res) => {

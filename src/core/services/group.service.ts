@@ -48,6 +48,20 @@ export const getGroupPreview = (userId: string) => {
     ]);
 };
 
+export const getUserGroups = (userId: string) => {
+    return GroupsCollection.aggregate([
+        {
+            $match: {
+                $or: [{
+                    "admin": Types.ObjectId(userId)
+                }, {
+                    "participants": {$in: [Types.ObjectId(userId), "$participants"]}
+                }]
+            }
+        }
+    ])
+};
+
 export const getAvailableGroupsForUser = (userId: string) => {
     return GroupsCollection.aggregate([
         {
