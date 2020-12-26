@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { BadRequest, InternalServerError } from 'http-errors';
+import { BadRequest, Forbidden, InternalServerError } from 'http-errors';
 
 import { GroupService, UserService } from "../core/services";
 
@@ -8,9 +8,13 @@ const router = express.Router();
 
 router.use(passport.authenticate('jwt', {session: false}));
 
-router.get('/', async (req, res) => {
-    const result = await GroupService.getAll();
-    res.status(200).send(result);
+router.get('/', async (req, res, next) => {
+    try {
+        const result = await GroupService.getAll();
+        res.status(200).send(result);
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
 });
 
 router.get('/preview', async (req, res, next) => {
@@ -33,10 +37,21 @@ router.get('/getAvailableGroupsForUser', async (req, res, next) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
-    const id = req.params.id;
-    const result = await GroupService.getById(id);
-    res.status(200).send(result);
+router.get('/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await GroupService.getById(id);
+        const userId = <string>req.user['_id'];
+        const haveAccess = result.participants.find((participant) => participant['_id'].toString() === userId.toString())
+            || result.admin['_id'].toString() === userId.toString();
+        if (haveAccess) {
+            res.status(200).send(result);
+        } else {
+            next(new Forbidden("You don't have access"));
+        }
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
 });
 
 router.post('/:id/invite', async (req, res, next) => {
