@@ -11,7 +11,6 @@ router.use(passport.authenticate('jwt', {session: false}));
 router.get('/:interview_id', async (req, res, next) => {
     try {
         const interview_id = <string>req.params.interview_id;
-        const admin_id = req.user['_id'];
         if (interview_id) {
             const answer = await AnswerService.getAnswerStatistic(interview_id);
             res.status(200).send(answer)
@@ -30,8 +29,9 @@ router.post('/', async (req, res, next) => {
         if (!answer) {
             const result = await AnswerService.create(body, req.user['_id']);
             res.status(201).send(result);
+        } else {
+            next(new BadRequest("You have already voted"));
         }
-        next(new BadRequest("You have already voted"));
     } catch (e) {
         next(new InternalServerError(e.message));
     }

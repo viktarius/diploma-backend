@@ -8,7 +8,9 @@ const InterviewSchema: Schema = new Schema({
     created_at: {type: Date},
     updated_at: {type: Date},
     admin: {type: Schema.Types.ObjectId, ref: 'Users'},
-    managers: [{type: Schema.Types.ObjectId, ref: 'Users'}]
+    managers: [{type: Schema.Types.ObjectId, ref: 'Users'}],
+    assigned_to_group: {type: Schema.Types.ObjectId, ref: 'Groups'},
+    is_public_interview: {type: Boolean}
 }, {versionKey: false});
 
 export default model<Interview>('Interviews', InterviewSchema)
