@@ -8,15 +8,6 @@ const router = express.Router();
 
 router.use(passport.authenticate('jwt', {session: false}));
 
-router.get('/', async (req, res, next) => {
-    try {
-        const result = await GroupService.getAll();
-        res.status(200).send(result);
-    } catch (e) {
-        next(new InternalServerError(e.message));
-    }
-});
-
 router.get('/preview', async (req, res, next) => {
     try {
         const userId = req.user['_id'];
@@ -49,6 +40,16 @@ router.get('/:id', async (req, res, next) => {
         } else {
             next(new Forbidden("You don't have access"));
         }
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await GroupService.deleteById(id);
+        res.status(200).send(result);
     } catch (e) {
         next(new InternalServerError(e.message));
     }

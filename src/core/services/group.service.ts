@@ -10,16 +10,16 @@ export const create = (body: Group, user_id: string) => {
     return GroupsCollection.create(group)
 };
 
-export const getAll = () => {
-    return GroupsCollection.find({});
-};
-
 export const getById = (id: string) => {
     return GroupsCollection.findById(id)
         .populate({path: 'admin', select: '_id email displayed_name'})
         .populate({path: 'participants', select: '_id email displayed_name'})
         .populate({path: 'invited', select: '_id email displayed_name'})
         .populate({path: 'requested', select: '_id email displayed_name'});
+};
+
+export const deleteById = (id: string) => {
+    return GroupsCollection.findByIdAndDelete(id);
 };
 
 export const getGroupPreview = (userId: string) => {
