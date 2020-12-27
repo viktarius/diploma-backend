@@ -67,7 +67,13 @@ export const getUserGroups = (userId: string) => {
 export const getAvailableGroupsForUser = (userId: string) => {
     return GroupsCollection.aggregate([
         {
-            $match: {admin: Types.ObjectId(userId)}
+            $match: {
+                $or: [{
+                    "admin": Types.ObjectId(userId),
+                }, {
+                    "managers": {$in: [Types.ObjectId(userId), "$managers"]}
+                }]
+            }
         },
         {
             $project: {
