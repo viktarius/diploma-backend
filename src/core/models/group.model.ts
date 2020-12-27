@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { GroupType } from "./group-type.enum";
+import { GroupPrivacyType } from "./group-privacy-type.enum";
 
 export interface Group extends Document {
     label: string;
@@ -7,6 +7,6 @@ export interface Group extends Document {
     invited: Array<string>;
     requested: Array<string>;
     admin: string;
-    type: GroupType,
+    privacyType: GroupPrivacyType;
     isDeleted: boolean;
 }

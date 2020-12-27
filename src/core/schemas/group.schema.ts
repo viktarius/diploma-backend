@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-import { Group, GroupType } from "../models";
+import { Group, GroupPrivacyType } from "../models";
 
 const GroupSchema: Schema = new Schema({
     label: {type: String, required: true},
@@ -8,8 +8,7 @@ const GroupSchema: Schema = new Schema({
     invited: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     requested: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     admin: {type: Schema.Types.ObjectId, ref: 'Users'},
-    type: {type: GroupType},
-    isDeleted: {type: Boolean},
+    privacyType: {type: GroupPrivacyType, required: true}
 }, {versionKey: false});
 
 export default model<Group>('Groups', GroupSchema);

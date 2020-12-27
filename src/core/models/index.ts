@@ -4,5 +4,5 @@ export * from './user.model';
 export * from './answer.model';
 
 export * from './group.model';
-export * from './group-type.enum';
+export * from './group-privacy-type.enum';
 
