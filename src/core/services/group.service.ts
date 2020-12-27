@@ -37,12 +37,14 @@ export const getGroupPreview = (userId: string) => {
             $project: {
                 "_id": 1,
                 "label": 1,
+                "privacyType": 1,
                 "admin._id": 1,
                 "admin.displayed_name": 1,
                 "participants": {$size: {$ifNull: ["$participants", []]}},
                 "requested": {$in: [Types.ObjectId(userId), "$requested"]},
                 "invited": {$in: [Types.ObjectId(userId), "$invited"]},
-                "participated": {$in: [Types.ObjectId(userId), "$participants"]}
+                "participated": {$in: [Types.ObjectId(userId), "$participants"]},
+                "manager": {$in: [Types.ObjectId(userId), {$ifNull: ["$managers", []]}]}
             }
         }
     ]);

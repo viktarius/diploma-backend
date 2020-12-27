@@ -7,6 +7,7 @@ export interface Group extends Document {
     invited: Array<string>;
     requested: Array<string>;
     admin: string;
+    managers: Array<string>;
     privacyType: GroupPrivacyType;
     isDeleted: boolean;
 }

@@ -141,4 +141,29 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+router.post('/:id/upgradeUser', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const {userId} = req.body;
+        const addTo = 'managers';
+        await GroupService.addUserTo(id, userId, addTo);
+        res.status(200).send({message: `user ${userId} was add to ${addTo}`});
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+router.post('/:id/downgradeUser', async (req, res, next) => {
+    const id = <string>req.params.id;
+    try {
+        const {userId} = req.body;
+        const removeFrom = 'managers';
+        await GroupService.removeUserFrom(id, userId, removeFrom);
+        res.status(200).send({message: `user ${userId} was remove from ${removeFrom}`});
+    } catch (e) {
+        next(new InternalServerError(e.message));
+    }
+});
+
+
 export default router;

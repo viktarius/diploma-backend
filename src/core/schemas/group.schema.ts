@@ -8,6 +8,7 @@ const GroupSchema: Schema = new Schema({
     invited: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     requested: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     admin: {type: Schema.Types.ObjectId, ref: 'Users'},
+    managers: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     privacyType: {type: GroupPrivacyType, required: true}
 }, {versionKey: false});
 
