@@ -10,6 +10,7 @@ const InterviewSchema: Schema = new Schema({
     admin: {type: Schema.Types.ObjectId, ref: 'Users'},
     managers: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     assigned_to_group: {type: Schema.Types.ObjectId, ref: 'Groups'},
+    assigned_to_emails: [{type: String}],
     is_public_interview: {type: Boolean}
 }, {versionKey: false});
 

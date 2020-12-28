@@ -10,4 +10,5 @@ export interface Interview extends Document {
     managers: Array<string>;
     is_public_interview: boolean;
     assigned_to_group: string;
+    assigned_to_emails: Array<string>;
 }
