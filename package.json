@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=development nodemon",
-    "start:prod": "cross-env NODE_ENV=production nodemon",
-    "build:dev": "cross-env NODE_ENV=development tsc",
-    "build:prod": "cross-env NODE_ENV=production tsc"
+    "watch:dev": "cross-env NODE_ENV=development nodemon",
+    "watch:prod": "cross-env NODE_ENV=production nodemon",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev:start": "cross-env NODE_ENV=development node dist/server.js",
+    "prod:start": "cross-env NODE_ENV=production node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +36,7 @@
     "@types/http-errors": "^1.8.0",
     "@types/mongoose": "^5.7.36",
     "@types/node": "^14.11.8",
+    "@types/nodemailer": "^6.4.0",
     "@types/passport": "^1.0.4",
     "@types/passport-http-bearer": "^1.0.36",
     "@types/passport-jwt": "^3.0.3",
@@ -42,6 +45,7 @@
     "@types/uuid": "^8.3.0",
     "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.1",
+    "nodemailer": "^6.4.17",
     "nodemon": "^2.0.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"

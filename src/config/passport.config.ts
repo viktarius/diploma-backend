@@ -1,5 +1,5 @@
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt';
-import { PASSPORT_EXPIRES_IN, PASSPORT_SECRET_KEY } from './config';
+import { PASSPORT_EXPIRES_IN, PASSPORT_SECRET_KEY } from './configuration';
 import User from '../core/schemas/user.schema';
 
 export const applyPassportStrategy = passport => {

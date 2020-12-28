@@ -3,10 +3,9 @@ import mongoose from 'mongoose';
 import passport from "passport";
 import cors from 'cors';
 
-import { DB_NAME, DB_PASSWORD, DB_USERNAME, PORT } from './config'
+import { DB_NAME, DB_PASSWORD, DB_USERNAME, PORT, applyPassportStrategy } from './config'
 import routes from './routes';
 import { errorHandlerMiddleware } from "./core/middlewares";
-import { applyPassportStrategy } from "./config/passport.config";
 
 const server: express.Application = express();
 

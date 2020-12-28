@@ -2,7 +2,7 @@ import express from 'express';
 import passport from "passport";
 import { BadRequest, InternalServerError } from 'http-errors';
 
-import { InterviewService } from "../core/services";
+import { EmailService, InterviewService } from "../core/services";
 
 const router = express.Router();
 
@@ -27,11 +27,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res, next) => {
     const {body} = req;
     try {
-        if (body.assigned_to_emails) {
-            // todo: send invite on email
-            console.log(body.assigned_to_emails)
-        }
         const result = await InterviewService.create(body, req.user['_id']);
+        if (body.assigned_to_emails) {
+            await EmailService.send(body.assigned_to_emails);
+        }
         res.status(201).send(result);
     } catch (e) {
         next(new BadRequest(e.message));

@@ -9,6 +9,10 @@ import sha256 from "sha256";
 
 const router = express.Router();
 
+router.get('/test', (req, res) => {
+    res.status(200).send('hello world!');
+});
+
 router.post('/login', async (req, res, next) => {
     const {email, password} = req.body;
     const user = await UserService.findByEmail(email);
