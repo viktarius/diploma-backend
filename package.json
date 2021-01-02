@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "watch": "nodemon",
-    "start": "ts-node src/app.ts",
+    "start": "node build/app.js",
+    "build": "tsc",
+    "postinstall": "npm run build",
     "start:dev": "cross-env NODE_ENV=development node dist/server.js",
     "start:prod": "cross-env NODE_ENV=production node dist/server.js"
   },
