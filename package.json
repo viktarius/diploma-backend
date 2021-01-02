@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "watch": "nodemon",
-    "start": "node dist/app.js",
+    "start": "node /dist/app.js",
     "build": "tsc",
-    "postinstall": "tsc && mv -i -v public dist/ && rm -v -rf src",
     "start:dev": "cross-env NODE_ENV=development node dist/server.js",
     "start:prod": "cross-env NODE_ENV=production node dist/server.js"
   },
