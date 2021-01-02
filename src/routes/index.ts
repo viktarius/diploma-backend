@@ -7,6 +7,10 @@ import userRouter from './user.route';
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+    res.status(200).send("hello world")
+});
+
 router.use('/auth', authRouter);
 router.use('/interviews', interviewRouter);
 router.use('/answers', answerRouter);
