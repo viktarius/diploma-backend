@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config({path: __dirname + '/.env'});
 
-export const PORT = process.env.PORT;
+export const PORT = process.env.PORT || 4000;
 export const DB_USERNAME = process.env.DB_USERNAME;
 export const DB_PASSWORD = process.env.DB_PASSWORD;
 export const DB_NAME = process.env.DB_NAME;

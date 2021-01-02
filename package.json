@@ -2,11 +2,11 @@
   "name": "back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "watch": "nodemon",
     "build": "tsc",
-    "start": "npm run build && node dist/server.js",
+    "start": "node app.js",
     "start:dev": "cross-env NODE_ENV=development node dist/server.js",
     "start:prod": "cross-env NODE_ENV=production node dist/server.js"
   },
