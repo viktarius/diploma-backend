@@ -1,13 +1,13 @@
-process.env["NODE_CONFIG_DIR"] = __dirname + "/";
-import config from 'config';
+import * as dotenv from "dotenv";
+dotenv.config({ path: __dirname+'/.env' });
 
-export const PORT = config.get<number>('port');
-export const DB_USERNAME = config.get<string>('db.username');
-export const DB_PASSWORD = config.get<string>('db.password');
-export const DB_NAME = config.get<string>('db.name');
+export const PORT = process.env.PORT;
+export const DB_USERNAME = process.env.DB_USERNAME;
+export const DB_PASSWORD = process.env.DB_PASSWORD;
+export const DB_NAME = process.env.DB_NAME;
 
-export const PASSPORT_SECRET_KEY = config.get<string>('passport.secret');
-export const PASSPORT_EXPIRES_IN = config.get<string>('passport.expiresIn');
+export const PASSPORT_SECRET_KEY = process.env.PASSPORT_SECRET_KEY;
+export const PASSPORT_EXPIRES_IN = process.env.PORPASSPORT_EXPIRES_INT;
 
-export const EMAIL_SENDER_EMAIL = config.get<string>('email_sender.email');
-export const EMAIL_SENDER_PASSWORD = config.get<string>('email_sender.password');
+export const EMAIL_SENDER_EMAIL = process.env.EMAIL_SENDER_EMAIL;
+export const EMAIL_SENDER_PASSWORD = process.env.EMAIL_SENDER_PASSWORD;
