@@ -3,7 +3,8 @@ import { Question } from "./question";
 
 export interface Interview extends Document {
     label: string;
-    questions: Array<Question>
+    questions: Array<Question>;
+    deadline: Date;
     updated_at: Date;
     create_at: Date;
     admin: string;

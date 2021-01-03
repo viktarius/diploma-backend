@@ -7,6 +7,7 @@ const InterviewSchema: Schema = new Schema({
     questions: [Schema.Types.Mixed],
     created_at: {type: Date},
     updated_at: {type: Date},
+    deadline: {type: Date},
     admin: {type: Schema.Types.ObjectId, ref: 'Users'},
     managers: [{type: Schema.Types.ObjectId, ref: 'Users'}],
     assigned_to_group: {type: Schema.Types.ObjectId, ref: 'Groups'},

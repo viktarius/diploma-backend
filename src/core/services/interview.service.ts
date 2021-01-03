@@ -16,7 +16,7 @@ export const getInterviewPreview = async (userId: string, userEmail: string) => 
                 {'assigned_to_emails': {$in: [userEmail, "$assigned_to_emails"]}}
             ]
         })
-        .select('_id label admin')
+        .select('_id label admin deadline')
         .populate({path: 'admin', select: 'displayed_name'})
 };
 
