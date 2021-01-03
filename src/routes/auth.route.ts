@@ -1,11 +1,11 @@
 import express from 'express';
 import passport from "passport";
 import jwt from 'jsonwebtoken';
+import sha256 from "sha256";
 import { Forbidden, InternalServerError, Unauthorized } from 'http-errors';
 
 import { PASSPORT_EXPIRES_IN, PASSPORT_SECRET_KEY } from "../config";
 import { UserService } from "../core/services";
-import sha256 from "sha256";
 
 const router = express.Router();
 
