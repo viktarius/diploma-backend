@@ -2,7 +2,7 @@ import express from 'express';
 import passport from "passport";
 import { BadRequest, InternalServerError } from 'http-errors';
 
-import { EmailService, InterviewService } from "../core/services";
+import { AnswerService, EmailService, InterviewService } from "../core/services";
 
 const router = express.Router();
 
@@ -32,6 +32,16 @@ router.post('/', async (req, res, next) => {
             await EmailService.send(body.assigned_to_emails);
         }
         res.status(201).send(result);
+    } catch (e) {
+        next(new BadRequest(e.message));
+    }
+});
+
+router.get('/report/:id', async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        const answer = await AnswerService.getAnswerStatistic(id);
+        return res.send(answer);
     } catch (e) {
         next(new BadRequest(e.message));
     }
